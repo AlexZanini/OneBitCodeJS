@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        padding: 0.5em;
+        margin: 0.5em;
+      }
+
+      input[type="checkbox"] {
+        margin: 0.5em;
+      }
+
+      .output {
+        margin: 1em;
+        padding: 1em;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Personagem 1</h2>
+      <input type="text" id="char1Name" placeholder="Nome do personagem"></input>
+      <input type="number" id="char1Attack" placeholder="Poder de ataque"></input>
+
+      <h2>Personagem 2</h2>
+      <input type="text" id="char2Name" placeholder="Nome do personagem"></input>
+      <input type="number" id="char2HP" placeholder="Pontos de vida"></input>
+      <input type="number" id="char2Defense" placeholder="Poder de defesa"></input>
+      <input type="checkbox" id="char2Shield">Possui escudo</input>
+
+      <button id="calculateBtn">Calcular dano</button>
+
+      <div class="output" id="output"></div>
+    </div>
+
+    <script>
+      const char1Name = document.getElementById("char1Name");
+      const char1Attack = document.getElementById("char1Attack");
+      const char2Name = document.getElementById("char2Name");
+      const char2HP = document.getElementById("char2HP");
+      const char2Defense = document.getElementById("char2Defense");
+      const char2Shield = document.getElementById("char2Shield");
+      const calculateBtn = document.getElementById("calculateBtn");
+      const output = document.getElementById("output");
+
+      calculateBtn.addEventListener("click", function() {
+        let damage = 0;
+        if (char1Attack.value > char2Defense.value) {
+          damage = char2Shield.checked
+            ? (char1Attack.value - char2Defense.value) / 2
+            : char1Attack.value - char2Defense.value;
+        }
+        char2HP.value -= damage;
+
+        output.innerHTML = `
+          <p>${char1Name.value} causou ${damage} de dano a ${char2Name.value}</p>
+          <p>${char1Name.value}: Poder de ataque ${char1Attack.value}</p>
+          <p>${char2Name.value}: Pontos de vida ${char2HP.value}</p>
+        `;
+      });
+    </script>
+  </body>
+</html>
